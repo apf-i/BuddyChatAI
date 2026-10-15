@@ -1,0 +1,14 @@
+.app-layout-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-layout-main {
+  flex: 1;
+  padding-bottom: var(--space-6);
+}
+
+.app-layout-full-bleed .app-layout-main-bleed {
+  padding-bottom: 0;
+}

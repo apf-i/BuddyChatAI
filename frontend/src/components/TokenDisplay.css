@@ -1,0 +1,69 @@
+.token-display {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.token-coin-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.token-coin-fallback {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.token-amount {
+  font-weight: 600;
+  color: inherit;
+}
+
+.token-label-text {
+  font-size: 0.9em;
+  opacity: 0.8;
+  margin-left: 2px;
+}
+
+/* Size variants */
+.token-display-small .token-coin-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.token-display-small .token-coin-fallback {
+  font-size: 16px;
+}
+
+.token-display-small .token-amount {
+  font-size: 14px;
+}
+
+.token-display-medium .token-coin-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.token-display-medium .token-coin-fallback {
+  font-size: 40px;
+}
+
+.token-display-medium .token-amount {
+  font-size: 16px;
+}
+
+.token-display-large .token-coin-icon {
+  width: 80px;
+  height: 80px;
+}
+
+.token-display-large .token-coin-fallback {
+  font-size: 80px;
+}
+
+.token-display-large .token-amount {
+  font-size: 24px;
+  font-weight: 700;
+}

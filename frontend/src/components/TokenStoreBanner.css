@@ -1,0 +1,49 @@
+.token-store-banner-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: transparent;
+  padding: 8px 8px 8px 0;
+  min-height: 100px; /* Ensure container has height even if image fails */
+  min-width: 200px; /* Ensure container has minimum width */
+}
+
+.token-store-banner-image.token-store-banner-clickable {
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.token-store-banner-image.token-store-banner-clickable:hover {
+  opacity: 0.9;
+}
+
+.token-store-banner-image {
+  max-width: 100%;
+  max-height: 300px;
+  height: auto;
+  width: auto;
+  display: block;
+  object-fit: contain;
+  background: transparent;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .token-store-banner-container {
+    padding: 8px 0;
+  }
+
+  .token-store-banner-image {
+    max-width: 100%;
+    max-height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .token-store-banner-image {
+    max-width: 100%;
+    max-height: 150px;
+  }
+}

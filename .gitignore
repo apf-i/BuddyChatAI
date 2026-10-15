@@ -1,0 +1,65 @@
+# Dependencies
+node_modules/
+/.pnp
+.pnp.js
+
+# Testing
+/coverage
+
+# Production
+/build
+/dist
+backend/dist/
+frontend/dist/
+.vite/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Uploads
+uploads/
+!uploads/.gitkeep
+
+# TypeScript
+*.tsbuildinfo
+
+# Stable Diffusion WebUI (large, not needed in repo)
+stable-diffusion-webui/
+generative-models-main/
+
+# Local notes, setup guides, and helper scripts (kept on disk, not published)
+/*.md
+!/README.md
+/*.bat
+/*.ps1
+/*.txt
+/reset-password.js
+backend/reset-password.js
+/PRIVACY_POLICY
+/TERMS+SERVICE
+/REALISM
+/SOCIAL_IDEA
+/webReq
+/codingReq
+/noop

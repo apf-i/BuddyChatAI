@@ -1,0 +1,36 @@
+.vip-badge-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-weight: 700;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.vip-badge-small {
+  padding: 1px 6px;
+  font-size: 11px;
+}
+
+.vip-badge-medium {
+  padding: 2px 8px;
+  font-size: 12px;
+}
+
+.vip-crown-inline {
+  font-size: 12px;
+  color: #000;
+}
+
+.vip-badge-small .vip-crown-inline {
+  font-size: 10px;
+}
+
+.vip-text-inline {
+  color: #000;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}

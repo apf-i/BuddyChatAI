@@ -1,0 +1,109 @@
+.profile-following-page {
+  min-height: 100vh;
+  background: transparent;
+}
+
+.following-header {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.back-button {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: var(--accent-primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.back-button:hover {
+  color: var(--accent-secondary);
+  text-decoration: underline;
+}
+
+.following-header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.following-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.following-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: rgba(139, 92, 246, 0.05);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.following-card:hover {
+  background: rgba(139, 92, 246, 0.1);
+  border-color: rgba(139, 92, 246, 0.4);
+  transform: translateY(-2px);
+}
+
+.following-avatar,
+.following-avatar-placeholder {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid rgba(139, 92, 246, 0.3);
+  flex-shrink: 0;
+}
+
+.following-avatar {
+  object-fit: cover;
+}
+
+.following-avatar-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+  color: white;
+  font-weight: 700;
+  font-size: 24px;
+  text-transform: uppercase;
+}
+
+.following-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.following-username {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.following-date {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-secondary);
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-secondary);
+}

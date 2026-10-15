@@ -1,0 +1,37 @@
+.block-button {
+  padding: 8px 16px;
+  border: 1px solid #dc3545;
+  background-color: transparent;
+  color: #dc3545;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.block-button:hover:not(:disabled) {
+  background-color: #dc3545;
+  color: white;
+}
+
+.block-button.blocked {
+  border-color: #6c757d;
+  color: #6c757d;
+}
+
+.block-button.blocked:hover:not(:disabled) {
+  background-color: #6c757d;
+  color: white;
+}
+
+.block-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.block-status-message {
+  padding: 8px 16px;
+  color: #6c757d;
+  font-size: 14px;
+  font-style: italic;
+}
