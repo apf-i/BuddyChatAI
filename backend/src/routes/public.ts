@@ -4,6 +4,7 @@ import { parseSearchQuery } from '../utils/searchKeywords';
 import { locationMatchesCountryCode } from '../utils/flagMatching';
 import { searchTags, getAllTags } from '../utils/tags';
 import { isCharacterCategory } from '../config/characterCategories';
+import { isSampleCharacter, sampleMatchesFilters, samplePublicCharacter } from '../data/sampleCharacter';
 
 const router = express.Router();
 
@@ -140,7 +141,7 @@ router.get('/characters', async (req, res) => {
 
     if (error) {
       console.error('Error fetching characters:', error);
-      return res.status(500).json({ error: 'Failed to fetch characters' });
+      characters = [];
     }
 
     console.log(`Found ${characters?.length || 0} characters before filtering`);
@@ -503,12 +504,21 @@ router.get('/characters', async (req, res) => {
               })
             );
 
-            // Combine both types of characters
+            // Combine both types of characters, and always offer the sample buddy when it matches the filters
             const allCharacters = [...templateCharactersWithImages, ...communityCharactersWithImages];
+            if (
+              sampleMatchesFilters(category, search) &&
+              !allCharacters.some((char) => char.id === samplePublicCharacter().id)
+            ) {
+              allCharacters.unshift(samplePublicCharacter());
+            }
 
             res.json({ characters: allCharacters });
   } catch (error) {
     console.error('Public characters error:', error);
+    if (sampleMatchesFilters(req.query.category, req.query.search)) {
+      return res.json({ characters: [samplePublicCharacter()] });
+    }
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -628,6 +638,28 @@ router.get('/characters/:characterId', async (req, res) => {
       (req.protocol + '://' + req.get('host')) || 
       `http://localhost:${process.env.PORT || 3001}`;
     const { characterId } = req.params;
+
+    if (isSampleCharacter(characterId)) {
+      const sample = samplePublicCharacter();
+      return res.json({
+        character: {
+          id: sample.id,
+          name: sample.name,
+          age: sample.age,
+          location: sample.location,
+          personality: sample.personality,
+          system_prompt: sample.system_prompt,
+          tags: sample.tags,
+          category: sample.category,
+          images: sample.images,
+          previewImage: sample.image_url,
+          isCommunity: false,
+          uploaderUserId: null,
+          uploaderUsername: null,
+          uploaderProfilePicture: null,
+        },
+      });
+    }
 
     // Try to get character template first
     let { data: character, error: charError } = await supabase

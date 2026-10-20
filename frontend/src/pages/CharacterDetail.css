@@ -186,7 +186,7 @@
 .character-detail-thumb {
   flex: 0 0 72px;
   width: 72px;
-  aspect-ratio: 2 / 3;
+  aspect-ratio: 3 / 4;
   padding: 0;
   border: 2px solid transparent;
   border-radius: var(--radius-md);

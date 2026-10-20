@@ -8,6 +8,7 @@ import FavoriteButton from '../components/FavoriteButton';
 import ReportButton from '../components/ReportButton';
 import '../components/CharacterCard.css';
 import './CharacterDetail.css';
+import { SAMPLE_CHARACTER_ID, sampleCharacterDetail } from '../constants/sampleCharacter';
 
 interface CharacterDetail {
   id: string;
@@ -68,7 +69,12 @@ export default function CharacterDetail() {
         setError(null);
       } catch (err: any) {
         console.error('Error fetching character:', err);
-        setError(err.response?.data?.error || 'Failed to load character');
+        if (characterId === SAMPLE_CHARACTER_ID && type !== 'user' && type !== 'community') {
+          setCharacter(sampleCharacterDetail());
+          setError(null);
+        } else {
+          setError(err.response?.data?.error || 'Failed to load character');
+        }
       } finally {
         setLoading(false);
       }

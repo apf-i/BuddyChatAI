@@ -2,6 +2,7 @@ import express from 'express';
 import { z } from 'zod';
 import { supabase } from '../db/supabase';
 import { authMiddleware, AuthRequest } from '../middleware/auth';
+import { isSampleCharacter, samplePublicCharacter } from '../data/sampleCharacter';
 
 const router = express.Router();
 
@@ -28,15 +29,17 @@ router.post('/start', authMiddleware, async (req: AuthRequest, res) => {
       characterType = 'template';
       characterId = validated.template_id;
 
-      // Verify template exists
-      const { data: template, error: templateError } = await supabase
-        .from('character_templates')
-        .select('id')
-        .eq('id', characterId)
-        .single();
+      // The built-in sample character is not stored in the database
+      if (!isSampleCharacter(characterId)) {
+        const { data: template, error: templateError } = await supabase
+          .from('character_templates')
+          .select('id')
+          .eq('id', characterId)
+          .single();
 
-      if (templateError || !template) {
-        return res.status(404).json({ error: 'Character template not found' });
+        if (templateError || !template) {
+          return res.status(404).json({ error: 'Character template not found' });
+        }
       }
     } else if (validated.user_character_id) {
       characterType = 'user_character';
@@ -145,7 +148,14 @@ router.get('/', authMiddleware, async (req: AuthRequest, res) => {
       sessions.map(async (session) => {
         // Get character details
         let character: any = null;
-        if (session.character_type === 'template') {
+        if (session.character_type === 'template' && isSampleCharacter(session.character_id)) {
+          const sample = samplePublicCharacter();
+          character = {
+            id: sample.id,
+            name: sample.name,
+            image_url: sample.image_url,
+          };
+        } else if (session.character_type === 'template') {
           const { data } = await supabase
             .from('character_templates')
             .select('id, name, image_url')
@@ -254,7 +264,19 @@ router.get('/:sessionId', authMiddleware, async (req: AuthRequest, res) => {
     // Get character details
     const BACKEND_URL = process.env.BACKEND_URL || `http://localhost:${process.env.PORT || 3001}`;
     let character: any = null;
-    if (session.character_type === 'template') {
+    if (session.character_type === 'template' && isSampleCharacter(session.character_id)) {
+      const sample = samplePublicCharacter();
+      character = {
+        id: sample.id,
+        name: sample.name,
+        image_url: sample.image_url,
+        personality: sample.personality,
+        system_prompt: sample.system_prompt,
+        age: sample.age,
+        location: sample.location,
+        tags: sample.tags,
+      };
+    } else if (session.character_type === 'template') {
       // First try with optional fields (age, location)
       let { data, error: queryError } = await supabase
         .from('character_templates')

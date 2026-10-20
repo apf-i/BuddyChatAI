@@ -10,6 +10,7 @@ import { SkeletonGrid } from '../components/ui/Skeleton';
 import Button from '../components/ui/Button';
 import { FaFilter, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { CHARACTER_CATEGORIES } from '../constants/characterCategories';
+import { SAMPLE_CHARACTER_ID, sampleGalleryCharacter } from '../constants/sampleCharacter';
 import './Gallery.css';
 
 interface Character extends CharacterCardData {
@@ -190,7 +191,10 @@ export default function Gallery() {
           })
         : [];
       
-      const allChars = [...userChars, ...publicChars];
+      const withSample = publicChars.some((char: Character) => char.id === SAMPLE_CHARACTER_ID)
+        ? publicChars
+        : [sampleGalleryCharacter(), ...publicChars];
+      const allChars = [...userChars, ...withSample];
       setCharacters(allChars);
       setFilteredCharacters(allChars);
       setError(null);

@@ -7,6 +7,7 @@ import CharacterCard, { CharacterCardData } from '../components/CharacterCard';
 import SectionHeader from '../components/ui/SectionHeader';
 import { SkeletonGrid } from '../components/ui/Skeleton';
 import { CHARACTER_CATEGORIES, CharacterCategory } from '../constants/characterCategories';
+import { SAMPLE_CHARACTER_ID, sampleGalleryCharacter } from '../constants/sampleCharacter';
 import '../components/ui/SectionHeader.css';
 import './Browse.css';
 
@@ -72,6 +73,10 @@ export default function Browse() {
         grouped[cat] = [];
       });
       
+      if (!publicChars.some((char: Character) => char.id === SAMPLE_CHARACTER_ID)) {
+        publicChars.unshift(sampleGalleryCharacter() as Character);
+      }
+
       publicChars.forEach((char: Character) => {
         const category = char.category || 'Uncategorized';
         if (CATEGORIES.includes(category as Category)) {
@@ -86,8 +91,13 @@ export default function Browse() {
       setError(null);
     } catch (err: any) {
       console.error('Error fetching characters:', err);
-      const errorMessage = err.response?.data?.error || err.message || 'Failed to load characters';
-      setError(errorMessage);
+      const sample = sampleGalleryCharacter() as Character;
+      setCharactersByCategory({
+        Friends: [sample],
+        Mentors: [],
+        Adventurers: [],
+      });
+      setError(null);
       console.error('Full error details:', {
         message: err.message,
         response: err.response?.data,

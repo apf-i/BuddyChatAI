@@ -5,6 +5,7 @@ import { authMiddleware, AuthRequest } from '../middleware/auth';
 import { sendToOpenRouter } from '../services/openrouter';
 import { checkAndUpdateMemory } from '../services/memory';
 import { validateChatMessage } from '../services/moderation';
+import { isSampleCharacter, samplePublicCharacter } from '../data/sampleCharacter';
 
 const router = express.Router();
 
@@ -96,7 +97,15 @@ CONVERSATION GUIDELINES:
 - Never produce sexual, graphic, hateful, or harassing content
 - If the user steers toward inappropriate topics, politely redirect the conversation while staying in character`;
 
-    if (session.character_type === 'template') {
+    if (session.character_type === 'template' && isSampleCharacter(session.character_id)) {
+      const sample = samplePublicCharacter();
+      character = {
+        name: sample.name,
+        personality: sample.personality,
+        system_prompt: sample.system_prompt,
+      };
+      systemPrompt = `You are ${sample.name}, a fictional character. ${sample.system_prompt}${safetyRules}`;
+    } else if (session.character_type === 'template') {
       const { data } = await supabase
         .from('character_templates')
         .select('name, personality, system_prompt')
